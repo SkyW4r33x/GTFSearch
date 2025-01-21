@@ -12,7 +12,7 @@ GTFScan es un escáner local de GTFOBins. Esta herramienta de línea de comandos
 
 ### Kali Linux
 ```bash
-git clone https://github.com/SkyW4r33x/gtfobins.git
+git clone https://github.com/SkyW4r33x/GTFSearch.git
 cd gtfobins
 chmod +x kali-install.sh
 ./kali-install.sh
@@ -20,7 +20,7 @@ chmod +x kali-install.sh
 
 ### Otras distribuciones
 ```bash
-git clone https://github.com/SkyW4r33x/gtfobins.git
+git clone https://github.com/SkyW4r33x/GTFSearch.git
 cd gtfobins
 pip install -r requirements.txt
 chmod +x install.sh
