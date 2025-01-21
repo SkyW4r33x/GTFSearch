@@ -74,7 +74,7 @@ for RC in ".bashrc" ".zshrc"; do
 done
 
 
-echo -e "\n${GREEN}${BOLD}✓${RESET} GTFSCAN instalado exitosamente"
+echo -e "\n${GREEN}${BOLD}✓${RESET} GTFSearch instalado exitosamente"
 echo -e "\n${BOLD}Uso:${RESET}"
 echo -e "1. Recarga tu shell:  ${YELLOW}source ~/.bashrc ${GREEN}(o ~/.zshrc)${RESET}"
 echo -e "2. Ejecuta:           ${YELLOW}gtfsearch --help${RESET}\n"
