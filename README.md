@@ -1,4 +1,4 @@
-# GTFScan
+# GTFSearch
 
 GTFScan es un escáner local de GTFOBins. Esta herramienta de línea de comandos está diseñada para identificar y analizar binarios potencialmente vulnerables en sistemas Unix/Linux de manera rápida y eficiente.
 
@@ -13,7 +13,7 @@ GTFScan es un escáner local de GTFOBins. Esta herramienta de línea de comandos
 ### Kali Linux
 ```bash
 git clone https://github.com/SkyW4r33x/GTFSearch.git
-cd gtfobins
+cd GTFSearch
 chmod +x kali-install.sh
 ./kali-install.sh
 ```
@@ -21,7 +21,7 @@ chmod +x kali-install.sh
 ### Otras distribuciones
 ```bash
 git clone https://github.com/SkyW4r33x/GTFSearch.git
-cd gtfobins
+cd GTFSearch
 pip install -r requirements.txt
 chmod +x install.sh
 ./install.sh
