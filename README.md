@@ -40,8 +40,6 @@ gtfscan -h                  # Mostrar ayuda
 |--------|-------------|
 | `-l, --list` | Lista todos los binarios disponibles |
 | `-v, --verbose` | Modo verboso con información detallada |
-| `-h, --help` | Muestra el mensaje de ayuda |
-
 
 ## Créditos
 - 🔧 Desarrollado por [SkyW4r33x](https://github.com/SkyW4r33x)
