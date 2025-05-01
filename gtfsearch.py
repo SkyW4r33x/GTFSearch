@@ -1,4 +1,4 @@
-#~/.config/nvim/lua/configs/!/usr/bin/env python3
+#!/usr/bin/env python3
 #
 # Author: SkyW4r33x
 # Github: https://github.com/SkyW4r33x/gtfobins
