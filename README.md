@@ -97,11 +97,14 @@ En el modo interactivo, comandos útiles incluyen `help` (o `h`) para el menú d
 
 ## Capturas de Pantalla
 
+
 ![Modo Interactivo](https://i.imgur.com/B89HAGr.png)  
 *Ejemplo de modo interactivo con autocompletado y highlighting.*
 
+
 ![Búsqueda de Binario](https://i.imgur.com/mAz4CUF.png)  
 *Resultado de búsqueda para un binario específico, con paneles y código coloreado.*
+
 
 ![enter image description here](https://imgur.com/uJ7l0e2.png)
 *Comparativa GTFSearch y GTFObins*
