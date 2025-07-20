@@ -111,6 +111,9 @@ deactivate
 cp gtfsearch.py /usr/local/bin/gtfsearch.py
 chmod +x /usr/local/bin/gtfsearch.py
 
+# Cambiar propietario de gtfsearch.py al usuario normal
+chown $REAL_USER:$REAL_USER /usr/local/bin/gtfsearch.py 
+
 cat << EOF > /usr/bin/gtfsearch
 #!/bin/sh
 exec /usr/local/lib/gtfsearch/venv/bin/python3 /usr/local/bin/gtfsearch.py "\$@"
