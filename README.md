@@ -89,11 +89,11 @@ En el modo interactivo, comandos útiles incluyen `help` (o `h`) para el menú d
 
 ## Opciones
 
-| Opción            | Alias | Descripción                                      |
-|-------------------|-------|--------------------------------------------------|
-| `-h, --help`      |       | Muestra el mensaje de ayuda completo             |
-| `-l, --list`      |       | Lista todos los binarios disponibles             |
-| `-t, --type`      |       | Filtra por tipo de función (ej. suid, shell)     |
+| Opción             | Descripción                                      |
+|--------------------|--------------------------------------------------|
+| `-h, --help`       | Muestra el mensaje de ayuda completo             |
+| `-l, --list`       | Lista todos los binarios disponibles             |
+| `-t, --type`       | Filtra por tipo de función (ej. suid, shell)     |
 
 ## Capturas de Pantalla
 
