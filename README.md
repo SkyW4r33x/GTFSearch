@@ -1,6 +1,3 @@
-
-# GTFSearch
-
 ![GTFSearch Banner](https://i.imgur.com/eKrVtqQ.png)
 
 ![Python Version](https://img.shields.io/badge/Python-3.8%2B-blue.svg?style=flat-square)
