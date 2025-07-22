@@ -1,3 +1,4 @@
+Sure, here is the translation to English:
 ![GTFSearch Banner](https://i.imgur.com/eKrVtqQ.png)
 
 ![Python Version](https://img.shields.io/badge/Python-3.8%2B-blue.svg?style=flat-square)
@@ -6,38 +7,39 @@
 ![GitHub Issues](https://img.shields.io/github/issues/SkyW4r33x/GTFSearch?style=flat-square&color=yellow)
 ![GitHub Forks](https://img.shields.io/github/forks/SkyW4r33x/GTFSearch?style=flat-square)
 
-GTFSearch es una herramienta avanzada de línea de comandos diseñada para buscar y analizar binarios potencialmente explotables basados en el repositorio [GTFOBins](https://gtfobins.github.io/). Facilita la identificación de vulnerabilidades en sistemas Unix/Linux de manera local, eficiente y segura, con soporte para modo interactivo, filtrado por funciones (como SUID o shell) y visualización enriquecida.
+GTFSearch is an advanced command-line tool designed to search and analyze potentially exploitable binaries based on the [GTFOBins](https://gtfobins.github.io/) repository. It facilitates the identification of vulnerabilities in Unix/Linux systems locally, efficiently, and securely, with support for interactive mode, filtering by functions (such as SUID or shell), and enriched visualization.
 
-## Tabla de Contenidos
+## Table of Contents
 
-- [Características](#características)
-- [Requisitos](#requisitos)
-- [Instalación](#instalación)
-- [Uso](#uso)
-- [Opciones](#opciones)
-- [Capturas de Pantalla](#capturas-de-pantalla)
-- [Créditos](#créditos)
-## Características
+- [Features](#features)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Options](#options)
+- [Screenshots](#screenshots)
+- [Credits](#credits)
 
-- **Modo Interactivo**: Explora binarios en un prompt personalizado con autocompletado inteligente, highlighting de sintaxis y navegación intuitiva.
-- **Filtrado Avanzado**: Busca por tipos de funciones específicas (ej. `-t suid`) para enfocarte en exploits relevantes.
-- **Listado Completo**: Muestra todos los binarios disponibles con detalles de funciones asociadas.
-- **Interfaz Enriquecida**: Utiliza [Rich](https://rich.readthedocs.io/en/stable/) para tablas, paneles y código coloreado, mejorando la legibilidad.
-- **Seguridad Integrada**: Incluye validación de inputs, sanitización de consultas y manejo seguro de archivos para prevenir riesgos.
-- **Modo CLI Flexible**: Ejecuta búsquedas directas o ingresa al modo interactivo sin argumentos adicionales.
-- **Portabilidad**: Funciona en entornos virtuales Python para evitar conflictos con el sistema.
+## Features
 
-## Requisitos
+- **Interactive Mode**: Explore binaries in a customized prompt with intelligent autocompletion, syntax highlighting, and intuitive navigation.
+- **Advanced Filtering**: Search by specific function types (e.g., `-t suid`) to focus on relevant exploits.
+- **Comprehensive Listing**: Displays all available binaries with details of associated functions.
+- **Enriched Interface**: Uses [Rich](https://rich.readthedocs.io/en/stable/) for tables, panels, and colored code, improving readability.
+- **Built-in Security**: Includes input validation, query sanitization, and secure file handling to prevent risks.
+- **Flexible CLI Mode**: Run direct searches or enter interactive mode without additional arguments.
+- **Portability**: Works in Python virtual environments to avoid conflicts with the system.
 
-- [Python 3.8 o superior](https://www.python.org/downloads/)
-- Sistema operativo Linux (optimizado para [Kali Linux](https://www.kali.org/) y distribuciones basadas en Debian/Ubuntu)
-- Dependencias automáticas: `rich` y `prompt-toolkit` (instaladas en un entorno virtual durante la setup)
+## Requirements
 
-## Instalación
+- [Python 3.8 or higher](https://www.python.org/downloads/)
+- Linux operating system (optimized for [Kali Linux](https://www.kali.org/) and Debian/Ubuntu-based distributions)
+- Automatic dependencies: `rich` and `prompt-toolkit` (installed in a virtual environment during setup)
 
-Clona el repositorio y utiliza el instalador proporcionado. Este crea un entorno virtual Python aislado, elimina versiones previas y configura el ejecutable en `/usr/bin/gtfsearch` para acceso global.
+## Installation
 
-### Para Kali Linux (Recomendado)
+Clone the repository and use the provided installer. It creates an isolated Python virtual environment, removes previous versions, and sets up the executable in `/usr/bin/gtfsearch` for global access.
+
+### For Kali Linux (Recommended)
 
 ```bash
 git clone https://github.com/SkyW4r33x/GTFSearch.git
@@ -46,70 +48,64 @@ chmod +x kali-install.sh
 sudo ./kali-install.sh
 ```
 
-**Notas de Instalación**:
-- El proceso es automatizado y toma menos de un minuto.
-- Si encuentras problemas, verifica permisos de root y conexión para actualizaciones de paquetes.
-- Para desinstalación, ejecuta el instalador nuevamente (elimina automáticamente versiones previas).
+**Installation Notes**:
+- The process is automated and takes less than a minute.
+- If you encounter issues, verify root permissions and internet connection for package updates.
+- For uninstallation, run the installer again (it automatically removes previous versions).
 
-## Uso
+## Usage
 
-Inicia `gtfsearch` sin argumentos para el modo interactivo, ideal para exploración detallada. Para consultas rápidas, proporciona un binario directamente.
+Launch `gtfsearch` without arguments for interactive mode, ideal for detailed exploration. For quick queries, provide a binary directly.
 
-### Ejemplos
+### Examples
 
-- **Modo Interactivo** (prompt personalizado para búsquedas y comandos):
+- **Interactive Mode** (customized prompt for searches and commands):
   ```bash
   gtfsearch
   ```
 
-- **Búsqueda de un Binario Específico**:
+- **Search for a Specific Binary**:
   ```bash
   gtfsearch vim
   ```
 
-- **Listado de Todos los Binarios**:
+- **List All Binaries**:
   ```bash
   gtfsearch -l
   ```
 
-- **Filtrado por Tipo de Función** (ej. SUID):
+- **Filter by Function Type** (e.g., SUID):
   ```bash
   gtfsearch vim -t suid
   ```
 
-- **Mostrar Ayuda**:
+- **Show Help**:
   ```bash
   gtfsearch -h
   ```
 
-En el modo interactivo, comandos útiles incluyen `help` (o `h`) para el menú de ayuda, `list binaries` (o `lb`) para listar, o ingresa un binario directamente para detalles.
+In interactive mode, useful commands include `help` (or `h`) for the help menu, `list binaries` (or `lb`) for listing, or enter a binary directly for details.
 
-## Opciones
+## Options
 
-| Opción             | Descripción                                      |
+| Option             | Description                                      |
 |--------------------|--------------------------------------------------|
-| `-h, --help`       | Muestra el mensaje de ayuda completo             |
-| `-l, --list`       | Lista todos los binarios disponibles             |
-| `-t, --type`       | Filtra por tipo de función (ej. suid, shell)     |
+| `-h, --help`       | Displays the full help message                  |
+| `-l, --list`       | Lists all available binaries                    |
+| `-t, --type`       | Filters by function type (e.g., suid, shell)    |
 
-## Capturas de Pantalla
+## Screenshots
 
+![Interactive Mode](https://i.imgur.com/B89HAGr.png)  
+*Example of interactive mode with autocompletion and highlighting.*
 
+![Binary Search](https://i.imgur.com/mAz4CUF.png)  
+*Search result for a specific binary, with panels and colored code.*
 
-![Modo Interactivo](https://i.imgur.com/B89HAGr.png)  
-*Ejemplo de modo interactivo con autocompletado y highlighting.*
+![Comparison](https://imgur.com/uJ7l0e2.png)  
+*Comparison of GTFSearch and GTFOBins*
 
+## Credits
 
-
-![Búsqueda de Binario](https://i.imgur.com/mAz4CUF.png)  
-*Resultado de búsqueda para un binario específico, con paneles y código coloreado.*
-
-
-
-![comparativa](https://imgur.com/uJ7l0e2.png)
-*Comparativa GTFSearch y GTFObins*
-
-## Créditos
-
-- **Desarrollador Principal**: [SkyW4r33x](https://github.com/SkyW4r33x)
-- **Inspiración y Datos**: Basado en el proyecto [GTFOBins](https://gtfobins.github.io/)
+- **Main Developer**: [SkyW4r33x](https://github.com/SkyW4r33x)
+- **Inspiration and Data**: Based on the [GTFOBins](https://gtfobins.github.io/) project

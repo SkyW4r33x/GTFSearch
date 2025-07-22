@@ -8,12 +8,14 @@ readonly GREEN=$'\033[0;32m'
 readonly RED=$'\033[0;31m'
 readonly YELLOW=$'\033[1;33m'
 readonly CYAN=$'\033[38;2;73;174;230m'
+readonly PINK=$'\033[38;2;254;1;58m'
 readonly BOLD=$'\033[1m'
 readonly RESET=$'\033[0m'
 
-log_info() { echo -e "${GREEN}➜${RESET} $*"; }
-log_warn() { echo -e "${YELLOW}⚠${RESET} $*" >&2; }
-log_error() { echo -e "${RED}✘${RESET} $*" >&2; }
+log_info() { echo -e "[${GREEN}${BOLD}➜${RESET}] $*"; }
+log_warn() { echo -e "[${YELLOW}${BOLD}!${RESET}] $*" >&2; }
+log_error() { echo -e "[${RED}${BOLD}✘${RESET}] $*" >&2; }
+gtfsearch() { echo -n  "${BLUE}${BOLD}GTFSearch${RESET}"; }
 
 spinner() {
     local pid=$1
@@ -22,7 +24,7 @@ spinner() {
     local i=0
     while kill -0 $pid 2>/dev/null; do
         local temp=${spinstr#?}
-        printf "\r${GREEN}⏳${RESET} %s ${GREEN}%s${RESET} " "$2" "${spinstr:0:1}"
+        printf "\r[${GREEN}⏳${RESET}] %s ${GREEN}%s${RESET} " "$2" "${spinstr:0:1}"
         spinstr=$temp${spinstr%"${temp}"}
         sleep $delay
         ((i++))
@@ -40,11 +42,11 @@ spinner() {
 }
 
 separator() {
-    echo -e "${BLUE}══════════════════════════════════════════════════════════════════════════${RESET}"
+    echo -e "${BLUE}\n══════════════════════════════════════════════════════════════════════════\n${RESET}"
 }
 
 uninstall_gtfsearch() {
-    log_info "Removing all GTFSearch installations..."
+  log_info "Removing all $(gtfsearch) installations..."
     rm -rf "$USER_HOME/.data" /usr/share/gtfobins /usr/local/lib/gtfsearch /usr/local/bin/gtfsearch.py /usr/bin/gtfsearch.py /usr/bin/gtfsearch &>/dev/null
     rm -f "$USER_HOME/.gtfsearch_history" &>/dev/null
 
@@ -62,129 +64,157 @@ uninstall_gtfsearch() {
 
 # ------------------ BANNER ---------------- #
 
-clear
-echo -e "${BLUE}"
-echo -e "══════════════════════════════════════════════════════════════════════════" 
-echo -e " ██████╗████████╗███████╗███████╗███████╗ █████╗ ██████╗  ██████╗██╗  ██╗ "
-echo -e "██╔════╝╚══██╔══╝██╔════╝██╔════╝██╔════╝██╔══██╗██╔══██╗██╔════╝██║  ██║ "
-echo -e "██║  ███╗  ██║   █████╗  ███████╗█████╗  ███████║██████╔╝██║     ███████║ "
-echo -e "██║   ██║  ██║   ██╔══╝  ╚════██║██╔══╝  ██╔══██║██╔══██╗██║     ██╔══██║ "
-echo -e "╚██████╔╝  ██║   ██║     ███████║███████╗██║  ██║██║  ██║╚██████╗██║  ██║ "
-echo -e " ╚═════╝   ╚═╝   ╚═╝     ╚══════╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝ "
-echo -e "══════════════════════════════════════════════════════════════════════════"                                                              
-echo -e "${GREEN}                  Author: SkyW4r33x\n"
+show_banner() {
+    clear
+    echo -e "${BLUE}"
+    echo -e " ██████╗████████╗███████╗███████╗███████╗ █████╗ ██████╗  ██████╗██╗  ██╗ "
+    echo -e "██╔════╝╚══██╔══╝██╔════╝██╔════╝██╔════╝██╔══██╗██╔══██╗██╔════╝██║  ██║ "
+    echo -e "██║  ███╗  ██║   █████╗  ███████╗█████╗  ███████║██████╔╝██║     ███████║ "
+    echo -e "██║   ██║  ██║   ██╔══╝  ╚════██║██╔══╝  ██╔══██║██╔══██╗██║     ██╔══██║ "
+    echo -e "╚██████╔╝  ██║   ██║     ███████║███████╗██║  ██║██║  ██║╚██████╗██║  ██║ "
+    echo -e " ╚═════╝   ╚═╝   ╚═╝     ╚══════╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝ ${RESET}\n"
+    echo -e "        ${BLUE}+ -- --=[${RESET} ${YELLOW}${bold}+${RESET} Created by ${BLUE}${BOLD}:${RESET} Jordan (SkyW4r33x) 🐉 ${BLUE}${BOLD}       ]${RESET}"
+    echo -e "        ${BLUE}+ -- --=[${RESET} ${YELLOW}${bold}+${RESET} Repository ${BLUE}${BOLD}:${RESET} https://github.com/SkyW4r33x ${BLUE}${BOLD}]${RESET}\n\n"
+}
 
+show_menu() {
+    separator
+    log_info "Available options:"
+    echo -e "  ${BOLD}1)${RESET} Install $(gtfsearch) ${BOLD}v${VERSION}${RESET} (removes previous versions)"
+    echo -e "  ${BOLD}2)${RESET} Uninstall $(gtfsearch) (removes everything)"
+    echo -e ""
+}
 
-# ------------------ ROOT VERIFICATION ---------------- #
+show_usage_instructions() {
+    echo -e "[${CYAN}${BOLD}+${RESET}]${BOLD} Usage instructions:${RESET}"
+    echo -e "${BLUE}────────────────────────────────────────────────${RESET}"
+    echo -e "[${BLUE}*${RESET}] Interactive mode:      ${CYAN}gtfsearch${RESET}"
+    echo -e "[${BLUE}*${RESET}] Non-interactive mode:  ${CYAN}gtfsearch${RESET} ${GREEN}--help${RESET}"
+    echo -e "[${BLUE}*${RESET}] Search nmap:           ${CYAN}gtfsearch${RESET} nmap"
+    echo -e "[${BLUE}*${RESET}] Search nmap SUID:      ${CYAN}gtfsearch${RESET} nmap ${GREEN}-t${RESET} SUID"
+}
 
-log_info "Checking root permissions..."
-[[ $EUID -ne 0 ]] && { log_error "This script must be run as root\n\nUsage: ${GREEN}sudo${RESET} ${CYAN}bash${RESET} $0"; exit 1; }
-log_info "Root permissions confirmed."
+show_installation_summary() {
+    echo -e "[${CYAN}${BOLD}+${RESET}]${BOLD} Installation summary:${RESET}"
+    echo -e "[${GREEN}✔${RESET}] Data files: ${BLUE}$USER_HOME/.data${RESET}"
+    echo -e "[${GREEN}✔${RESET}] Virtual environment: ${BLUE}/usr/local/lib/gtfsearch/venv${RESET}"
+    echo -e "[${GREEN}✔${RESET}] Executable: ${BLUE}/usr/bin/gtfsearch${RESET}\n"
+}
 
-# ------------------ USER DETECTION ---------------- #
+# ------------------ CORE FUNCTIONS ---------------- #
+check_root() {
+    log_info "Checking root permissions..."
+    [[ $EUID -ne 0 ]] && { 
+        log_error "This script must be run as root\n\nUsage: ${GREEN}sudo${RESET} ${CYAN}bash${RESET} $0"
+        exit 1
+    }
+    log_info "Root permissions confirmed."
+}
 
-REAL_USER=$(logname || echo "${SUDO_USER:-$USER}")
-USER_HOME="/home/$REAL_USER"
-log_info "Detected user: ${BLUE}$REAL_USER${RESET}"
+detect_user() {
+    REAL_USER=$(logname || echo "${SUDO_USER:-$USER}")
+    USER_HOME="/home/$REAL_USER"
+    log_info "Detected user: ${BLUE}${BOLD}$REAL_USER${RESET}"
+}
 
-# ------------------ MAIN MENU ---------------- #
+install_dependencies() {
+    log_info "Creating Python virtual environment..."
+    mkdir -p /usr/local/lib/gtfsearch
+    apt update -qq &>/dev/null &
+    spinner $! "Updating repositories..." || { log_error "Failed to update repositories"; return 1; }
+    apt install -y python3 python3-venv &>/dev/null &
+    spinner $! "Installing Python dependencies..." || { log_error "Failed to install dependencies"; return 1; }
+}
 
-separator
-log_info "Available options:"
-echo -e "  ${BLUE}1)${RESET} Install GTFSearch v${VERSION} (removes previous versions)"
-echo -e "  ${BLUE}2)${RESET} Uninstall GTFSearch (removes everything)"
-echo -e ""
-read -p "[${YELLOW}*${RESET}] Choose an option (1 or 2): " choice
+setup_python_environment() {
+    python3 -m venv /usr/local/lib/gtfsearch/venv
+    source /usr/local/lib/gtfsearch/venv/bin/activate
+    
+    pip install --upgrade pip &>/dev/null &
+    spinner $! "Upgrading pip..." || { log_error "Failed to upgrade pip"; return 1; }
+    
+    pip install rich prompt-toolkit &>/dev/null &
+    spinner $! "Installing required libraries..." || { log_error "Failed to install libraries"; return 1; }
+    
+    deactivate
+}
 
-case "$choice" in
-    1)
-        separator
-        read -p "$(echo -e "${YELLOW}⚠${RESET} Confirmation: Are you sure you want to install? (y/n): ")" confirm
-        if [[ "$confirm" != "y" && "$confirm" != "Y" ]]; then
-            log_info "Installation cancelled."
-            exit 0
-        fi
-        uninstall_gtfsearch 
-        separator
-        log_info "Starting GTFSearch v${VERSION} installation..."
-        
-        mkdir -p "$USER_HOME/.data"
-        cp .data/gtfobins.json "$USER_HOME/.data/gtfobins.json"
-        chmod 644 "$USER_HOME/.data/gtfobins.json"
-        chown -R "$REAL_USER:$REAL_USER" "$USER_HOME/.data"
-        log_info "Data files copied to ${BLUE}$USER_HOME/.data${RESET}"
-        
-        log_info "Creating Python virtual environment..."
-        mkdir -p /usr/local/lib/gtfsearch
-        apt update -qq &>/dev/null &
-        spinner $! "Updating repositories..." || { log_error "Failed to update repositories"; exit 1; }
-        apt install -y python3 python3-venv &>/dev/null &
-        spinner $! "Installing Python dependencies..." || { log_error "Failed to install dependencies"; exit 1; }
-        
-        python3 -m venv /usr/local/lib/gtfsearch/venv
-        source /usr/local/lib/gtfsearch/venv/bin/activate
-        
-        pip install --upgrade pip &>/dev/null &
-        spinner $! "Upgrading pip..." || { log_error "Failed to upgrade pip"; exit 1; }
-        
-        pip install rich &>/dev/null &
-        spinner $! "Installing rich library..." || { log_error "Failed to install rich"; exit 1; }
-        
-        pip install prompt-toolkit &>/dev/null &
-        spinner $! "Installing prompt-toolkit library..." || { log_error "Failed to install prompt-toolkit"; exit 1; }
-        
-        deactivate
-        
-        install -m 755 -o "$REAL_USER" -g "$REAL_USER" gtfsearch.py /usr/local/bin/gtfsearch.py
-        
-        cat << EOF > /usr/bin/gtfsearch
+install_gtfsearch() {
+    separator
+    log_info "Starting $(gtfsearch) v${VERSION} installation..."
+    
+    mkdir -p "$USER_HOME/.data"
+    cp .data/gtfobins.json "$USER_HOME/.data/gtfobins.json"
+    chmod 644 "$USER_HOME/.data/gtfobins.json"
+    chown -R "$REAL_USER:$REAL_USER" "$USER_HOME/.data"
+    log_info "Data files copied to ${BLUE}$USER_HOME/.data${RESET}"
+    
+    install_dependencies || return 1
+    setup_python_environment || return 1
+    
+    install -m 755 -o "$REAL_USER" -g "$REAL_USER" gtfsearch.py /usr/local/bin/gtfsearch.py
+    
+    cat << EOF > /usr/bin/gtfsearch
 #!/bin/sh
 exec /usr/local/lib/gtfsearch/venv/bin/python3 /usr/local/bin/gtfsearch.py "\$@"
 EOF
-        chmod +x /usr/bin/gtfsearch
-        log_info "Main script installed at ${BLUE}/usr/bin/gtfsearch${RESET}"
-        
-        separator
-        echo -e "\n[${GREEN}✔${BOLD}${RESET}] Installation completed ${GREEN}successfully${RESET}"
-
-        echo -e "[${CYAN}${BOLD}+${RESET}]${BOLD} Usage instructions:${RESET}"
-        echo -e "${BLUE}────────────────────────────────────────────────${RESET}"
-
-        echo -e "[${BLUE}*${RESET}] Interactive mode:      ${CYAN}gtfsearch${RESET}"
-        echo -e "[${BLUE}*${RESET}] Non-interactive mode:  ${CYAN}gtfsearch${RESET} --help"
-        echo -e "[${BLUE}*${RESET}] Search nmap:           ${CYAN}gtfsearch${RESET} nmap"
-        echo -e "[${BLUE}*${RESET}] Search nmap SUID:      ${CYAN}gtfsearch${RESET} nmap ${GREEN}-t${RESET} SUID"
-
-        echo -e "${BLUE}────────────────────────────────────────────────${RESET}"
-        echo -e "[${CYAN}${BOLD}+${RESET}]${BOLD} Note:${RESET} If you used aliases, reload your shell with:"
-        echo -e " ${CYAN}source${RESET} ~/.bashrc"
-        echo -e " ${CYAN}source${RESET} ~/.zshrc\n"
-
-        echo -e "[${CYAN}${BOLD}+${RESET}]${BOLD} Installation summary:${RESET}"
-
-        echo -e "${GREEN}✔${RESET} Data files: ${BLUE}$USER_HOME/.data${RESET}"
-        echo -e "${GREEN}✔${RESET} Virtual environment: ${BLUE}/usr/local/lib/gtfsearch/venv${RESET}"
-        echo -e "${GREEN}✔${RESET} Executable: ${BLUE}/usr/bin/gtfsearch${RESET}"
-
-        echo -e "[${RED}${BOLD}#${RESET}] Made with heart, in a world of shit 😎!\n"
-        separator
-        ;;
-    2)
-        separator
-        read -p "$(echo -e "${YELLOW}⚠${RESET} Confirmation: Are you sure you want to uninstall? (y/n): ")" confirm
-        if [[ "$confirm" != "y" && "$confirm" != "Y" ]]; then
-            log_info "Uninstallation cancelled."
-            exit 0
-        fi
-        uninstall_gtfsearch
-        separator
-        echo -e "\n[${RED}${BOLD}#${RESET}] Complete uninstall 😎 CRACK!"
-        echo -e "[${BLUE}${BOLD}+${RESET}] All GTFSearch components have been removed.\n"
-        separator
+    chmod +x /usr/bin/gtfsearch
+    log_info "Main script installed at ${BLUE}/usr/bin/gtfsearch${RESET}"
     
-        ;;
-    *)
-        log_error "Invalid option. Choose 1 or 2."
-        exit 1
-        ;;
-esac
+    return 0
+}
+
+# ------------------ MAIN EXECUTION ---------------- #
+main() {
+    show_banner
+    check_root
+    detect_user
+
+    prompt_status="${GREEN}✔${RESET}"
+
+    while true; do
+        show_banner
+        check_root
+        detect_user
+        show_menu
+        read -p "$(echo -e "${GREEN}┌──(${RESET}${BLUE}${BOLD}$REAL_USER${RESET}${GREEN})-[${RESET}${BOLD}Installer${RESET}${GREEN}]-[${prompt_status}${GREEN}]${RESET}\n${GREEN}└──╼${RESET}${BLUE}$ ${RESET}")" choice
+        case "$choice" in
+            1|2) break ;;
+            *)  echo -e ""
+                log_error "Invalid option. Please choose 1 or 2."
+                prompt_status="${RED}✘ ERROR${RESET}"
+                sleep 1
+                clear
+                ;;
+        esac
+    done
+
+    case "$choice" in
+        1)
+            separator
+            read -p "$(echo -e "[${YELLOW}${BOLD}⚠${RESET}] ${BOLD}Confirmation:${RESET} Are you sure you want to install? (y/n): ")" confirm
+            [[ "$confirm" != [yY] ]] && { log_info "Installation ${GREEN}cancelled${RESET}."; exit 0; }
+            
+            uninstall_gtfsearch
+            if install_gtfsearch; then
+                separator
+                show_usage_instructions
+                show_installation_summary
+                echo -e "[${RED}${BOLD}#${RESET}] Made with heart${RED}${BOLD}❣${RESET}, in a world of shit 😎!\n"
+                echo -e "\t\t${RED}${BOLD}H4PPY H4CK1NG${RESET}"
+            fi
+            ;;
+        2)
+            separator
+            read -p "$(echo -e "[${BOLD}${YELLOW}⚠${RESET}] ${BOLD}Confirmation:${RESET} Are you sure you want to uninstall? (y/n): ")" confirm
+            [[ "$confirm" != [yY] ]] && { log_info "Uninstallation cancelled."; exit 0; }
+            
+            uninstall_gtfsearch
+            separator
+            echo -e "[${RED}${BOLD}#${RESET}] ${RED}${BOLD}GTFSearch${RESET} complete uninstallation 😎 CRACK!"
+            ;;
+    esac
+    separator
+}
+
+main
