@@ -86,19 +86,29 @@ show_menu() {
 }
 
 show_usage_instructions() {
-    echo -e "[${CYAN}${BOLD}+${RESET}]${BOLD} Usage instructions:${RESET}"
+    clear
+    echo -e "\n[${CYAN}${BOLD}+${RESET}]${BOLD} Usage instructions:${RESET}"
     echo -e "${BLUE}────────────────────────────────────────────────${RESET}"
+    sleep 0.5
     echo -e "[${BLUE}*${RESET}] Interactive mode:      ${CYAN}gtfsearch${RESET}"
+    sleep 0.5
     echo -e "[${BLUE}*${RESET}] Non-interactive mode:  ${CYAN}gtfsearch${RESET} ${GREEN}--help${RESET}"
+    sleep 0.5
     echo -e "[${BLUE}*${RESET}] Search nmap:           ${CYAN}gtfsearch${RESET} nmap"
-    echo -e "[${BLUE}*${RESET}] Search nmap SUID:      ${CYAN}gtfsearch${RESET} nmap ${GREEN}-t${RESET} SUID"
+    sleep 0.5
+    echo -e "[${BLUE}*${RESET}] Search nmap SUID:      ${CYAN}gtfsearch${RESET} nmap ${GREEN}-t${RESET} SUID\n"
 }
 
 show_installation_summary() {
+    sleep 0.5
     echo -e "[${CYAN}${BOLD}+${RESET}]${BOLD} Installation summary:${RESET}"
-    echo -e "[${GREEN}✔${RESET}] Data files: ${BLUE}$USER_HOME/.data${RESET}"
-    echo -e "[${GREEN}✔${RESET}] Virtual environment: ${BLUE}/usr/local/lib/gtfsearch/venv${RESET}"
-    echo -e "[${GREEN}✔${RESET}] Executable: ${BLUE}/usr/bin/gtfsearch${RESET}\n"
+    echo -e "${BLUE}────────────────────────────────────────────────${RESET}"
+    sleep 0.5
+    echo -e "[${GREEN}✔${RESET}] Data files: ${BLUE}${BOLD}$USER_HOME/.data${RESET}"
+    sleep 0.5
+    echo -e "[${GREEN}✔${RESET}] Virtual environment: ${BLUE}${BOLD}/usr/local/lib/gtfsearch/venv${RESET}"
+    sleep 0.5
+    echo -e "[${GREEN}✔${RESET}] Executable: ${BLUE}${BOLD}/usr/bin/gtfsearch${RESET}\n"
 }
 
 # ------------------ CORE FUNCTIONS ---------------- #
@@ -147,7 +157,7 @@ install_gtfsearch() {
     cp .data/gtfobins.json "$USER_HOME/.data/gtfobins.json"
     chmod 644 "$USER_HOME/.data/gtfobins.json"
     chown -R "$REAL_USER:$REAL_USER" "$USER_HOME/.data"
-    log_info "Data files copied to ${BLUE}$USER_HOME/.data${RESET}"
+    log_info "Data files copied to ${BLUE}${BOLD}$USER_HOME/.data${RESET}"
     
     install_dependencies || return 1
     setup_python_environment || return 1
@@ -159,8 +169,7 @@ install_gtfsearch() {
 exec /usr/local/lib/gtfsearch/venv/bin/python3 /usr/local/bin/gtfsearch.py "\$@"
 EOF
     chmod +x /usr/bin/gtfsearch
-    log_info "Main script installed at ${BLUE}/usr/bin/gtfsearch${RESET}"
-    
+    log_info "Main script installed at ${BLUE}${BOLD}/usr/bin/gtfsearch${RESET}"
     return 0
 }
 
@@ -177,7 +186,7 @@ main() {
         check_root
         detect_user
         show_menu
-        read -p "$(echo -e "${GREEN}┌──(${RESET}${BLUE}${BOLD}$REAL_USER${RESET}${GREEN})-[${RESET}${BOLD}Installer${RESET}${GREEN}]-[${prompt_status}${GREEN}]${RESET}\n${GREEN}└──╼${RESET}${BLUE}$ ${RESET}")" choice
+        read -p "$(echo -e "${GREEN}┌──(${RESET}${BLUE}${BOLD}$REAL_USER${RESET}${GREEN})-[${RESET}${BOLD}GTFSearch${RESET}${GREEN}]-[${prompt_status}${GREEN}]${RESET}\n${GREEN}└──╼${RESET}${BLUE}$ ${RESET}")" choice
         case "$choice" in
             1|2) break ;;
             *)  echo -e ""
@@ -191,13 +200,15 @@ main() {
 
     case "$choice" in
         1)
-            separator
-            read -p "$(echo -e "[${YELLOW}${BOLD}⚠${RESET}] ${BOLD}Confirmation:${RESET} Are you sure you want to install? (y/n): ")" confirm
+            clear
+            echo ""
+            read -p "$(echo -e "[${YELLOW}${BOLD}!${RESET}] ${BOLD}Confirmation:${RESET} Are you sure you want to install? (y/n): ")" confirm
             [[ "$confirm" != [yY] ]] && { log_info "Installation ${GREEN}cancelled${RESET}."; exit 0; }
             
             uninstall_gtfsearch
             if install_gtfsearch; then
                 separator
+                sleep 3
                 show_usage_instructions
                 show_installation_summary
                 echo -e "[${RED}${BOLD}#${RESET}] Made with heart${RED}${BOLD}❣${RESET}, in a world of shit 😎!\n"
@@ -205,16 +216,14 @@ main() {
             fi
             ;;
         2)
-            separator
-            read -p "$(echo -e "[${BOLD}${YELLOW}⚠${RESET}] ${BOLD}Confirmation:${RESET} Are you sure you want to uninstall? (y/n): ")" confirm
+            clear
+            read -p "$(echo -e "\n[${BOLD}${YELLOW}!${RESET}] ${BOLD}Confirmation:${RESET} Are you sure you want to uninstall? (y/n): ")" confirm
             [[ "$confirm" != [yY] ]] && { log_info "Uninstallation cancelled."; exit 0; }
             
             uninstall_gtfsearch
-            separator
-            echo -e "[${RED}${BOLD}#${RESET}] ${RED}${BOLD}GTFSearch${RESET} complete uninstallation 😎 CRACK!"
+            echo -e "\n\t[${RED}${BOLD}#${RESET}] ${RED}${BOLD}GTFSearch${RESET} complete uninstallation 😎 CRACK!\n"
             ;;
     esac
-    separator
 }
 
 main
